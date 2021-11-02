@@ -1,174 +1,174 @@
 .main {
-    --gradient: linear-gradient(45deg, var(--clr-main), var(--clr-forward));
-    --alpha: 0.5;
+	--gradient: linear-gradient(45deg, var(--clr-main), var(--clr-forward));
+	--alpha: 0.5;
 
-    display: grid;
-    place-items: center;
+	display: grid;
+	place-items: center;
 
-    width: 100vw;
-    height: 100vh;
+	width: 100vw;
+	height: 100vh;
 
-    //* Container of title and links
-    &__ctnr {
-        display: grid;
-        place-items: center;
-        gap: 1rem;
+	//* Container of title and links
+	&__ctnr {
+		display: grid;
+		place-items: center;
+		gap: 1rem;
 
-        padding: 4rem;
+		padding: 6rem 4rem;
 
-        &:hover .main__title::before {
-            transform: scaleX(1);
-        }
-    }
+		&:hover .main__title::before {
+			transform: scaleX(1);
+		}
+	}
 
-    &__title {
-        position: relative;
-        margin-top: 0;
-        margin-bottom: 1rem;
+	&__title {
+		position: relative;
+		margin-top: 0;
+		margin-bottom: 1rem;
 
-        &::before {
-            content: "";
-            position: absolute;
-            top: 100%;
-            inset-inline: 0;
+		&::before {
+			content: "";
+			position: absolute;
+			top: 100%;
+			inset-inline: 0;
 
-            height: 2px;
+			height: 2px;
 
-            background-image: var(--gradient);
-            transform-origin: left;
-            transform: scaleX(0);
-            transition: transform 300ms ease-in;
-        }
-    }
+			background-image: var(--gradient);
+			transform-origin: left;
+			transform: scaleX(0);
+			transition: transform 300ms ease-in;
+		}
+	}
 
-    &__link {
-        $link-width: 12rem;
+	&__link {
+		$link-width: 12rem;
 
-        position: relative;
-        isolation: isolate;
+		position: relative;
+		isolation: isolate;
 
-        border-radius: var(--border-radius);
-        padding-block: 0.75rem;
-        outline: 1px solid var(--clr-background);
-        outline-offset: -2px;
+		border-radius: var(--border-radius);
+		padding-block: 0.75rem;
+		outline: 1px solid var(--clr-background);
+		outline-offset: -2px;
 
-        width: $link-width;
+		width: $link-width;
 
-        text-align: center;
-        background-color: var(--clr-background);
-        background-image: var(--gradient);
+		text-align: center;
+		background-color: var(--clr-background);
+		background-image: var(--gradient);
 
-        cursor: pointer;
+		cursor: pointer;
 
-        transition: width 150ms ease-in;
+		transition: width 150ms ease-in;
 
-        &:hover {
-            width: #{$link-width + 0.75};
-        }
+		&:hover {
+			width: #{$link-width + 0.75};
+		}
 
-        &::selection {
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            background-color: transparent;
-        }
-    }
+		&::selection {
+			-webkit-touch-callout: none;
+			-webkit-user-select: none;
+			-khtml-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			background-color: transparent;
+		}
+	}
 }
 
 .stars {
-    position: absolute;
-    inset: 0;
+	position: absolute;
+	inset: 0;
 
-    z-index: -1;
+	z-index: -1;
 
-    &__dot {
-        border-radius: 50%;
-        background-color: var(--clr-text);
+	&__dot {
+		border-radius: 50%;
+		background-color: var(--clr-text);
 
-        &::before,
-        &::after {
-            content: "";
-            position: absolute;
-            border-radius: inherit;
-            background-color: inherit;
+		&::before,
+		&::after {
+			content: "";
+			position: absolute;
+			border-radius: inherit;
+			background-color: inherit;
 
-            animation: blink ease-out infinite;
-        }
+			animation: blink ease-out infinite;
+		}
 
-        @for $i from 1 to 50 {
-            $time: 20;
+		@for $i from 1 to 50 {
+			$time: 20;
 
-            //* Need to be repeated 2 times to be really random
-            &:nth-child(#{$i})::before {
-                $star-size: random(
-                        $limit: 5,
-                    ) +
-                    px;
-                $star-position-top: random(
-                    $limit: 100,
-                );
-                $star-position-left: random(
-                    $limit: 100,
-                );
+			//* Need to be repeated 2 times to be really random
+			&:nth-child(#{$i})::before {
+				$star-size: random(
+						$limit: 5,
+					) +
+					px;
+				$star-position-top: random(
+					$limit: 100,
+				);
+				$star-position-left: random(
+					$limit: 100,
+				);
 
-                $blink-time: random(
-                    $limit: 1000,
-                );
-                $blink-daley: random(
-                    $limit: 1000,
-                );
+				$blink-time: random(
+					$limit: 1000,
+				);
+				$blink-daley: random(
+					$limit: 1000,
+				);
 
-                top: clamp(2%, #{$star-position-top * 1%}, 98%);
-                left: clamp(2%, #{$star-position-left * 1%}, 98%);
+				top: clamp(2%, #{$star-position-top * 1%}, 98%);
+				left: clamp(2%, #{$star-position-left * 1%}, 98%);
 
-                width: #{"max(2px,#{$star-size})"};
-                height: #{"max(2px,#{$star-size})"};
+				width: #{"max(2px,#{$star-size})"};
+				height: #{"max(2px,#{$star-size})"};
 
-                animation-duration: #{$blink-time + $time * 100 + ms};
-                animation-delay: #{$blink-daley + $time * 100 + ms};
-            }
+				animation-duration: #{$blink-time + $time * 100 + ms};
+				animation-delay: #{$blink-daley + $time * 100 + ms};
+			}
 
-            &:nth-child(#{$i})::after {
-                $star-size: random(
-                        $limit: 5,
-                    ) +
-                    px;
-                $star-position-top: random(
-                    $limit: 100,
-                );
-                $star-position-left: random(
-                    $limit: 100,
-                );
+			&:nth-child(#{$i})::after {
+				$star-size: random(
+						$limit: 5,
+					) +
+					px;
+				$star-position-top: random(
+					$limit: 100,
+				);
+				$star-position-left: random(
+					$limit: 100,
+				);
 
-                $blink-time: random(
-                    $limit: 1000,
-                );
-                $blink-daley: random(
-                    $limit: 1000,
-                );
+				$blink-time: random(
+					$limit: 1000,
+				);
+				$blink-daley: random(
+					$limit: 1000,
+				);
 
-                top: clamp(2%, #{$star-position-top * 1%}, 98%);
-                left: clamp(2%, #{$star-position-left * 1%}, 98%);
+				top: clamp(2%, #{$star-position-top * 1%}, 98%);
+				left: clamp(2%, #{$star-position-left * 1%}, 98%);
 
-                width: #{"max(2px,#{$star-size})"};
-                height: #{"max(2px,#{$star-size})"};
+				width: #{"max(2px,#{$star-size})"};
+				height: #{"max(2px,#{$star-size})"};
 
-                animation-duration: #{$blink-time + $time * 100 + ms};
-                animation-delay: #{$blink-daley + $time * 100 + ms};
-            }
-        }
-    }
+				animation-duration: #{$blink-time + $time * 100 + ms};
+				animation-delay: #{$blink-daley + $time * 100 + ms};
+			}
+		}
+	}
 }
 
 @keyframes blink {
-    0% {
-        background-color: var(--clr-text);
-    }
+	0% {
+		background-color: var(--clr-text);
+	}
 
-    100% {
-        background-color: transparent;
-    }
+	100% {
+		background-color: transparent;
+	}
 }
