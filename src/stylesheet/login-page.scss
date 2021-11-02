@@ -36,6 +36,16 @@
         &:hover {
             transform: scale(1.05) scaleZ(1);
         }
+
+        &::selection {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-color: transparent;
+        }
     }
 
     &__stars {
@@ -62,7 +72,7 @@
                 //* Need to be repeated 2 times to be really random
                 &:nth-child(#{$i})::before {
                     $star-size: random(
-                            $limit: 4,
+                            $limit: 5,
                         ) +
                         px;
                     $star-position-top: random(
@@ -80,15 +90,15 @@
                     top: clamp(2%, #{$star-position-top * 1%}, 98%);
                     left: clamp(2%, #{$star-position-left * 1%}, 98%);
 
-                    width: #{"max(1px,#{$star-size})"};
-                    height: #{"max(1px,#{$star-size})"};
+                    width: #{"max(2px,#{$star-size})"};
+                    height: #{"max(2px,#{$star-size})"};
 
                     animation-duration: #{$blink-time + 20 * 100 + ms};
                 }
 
                 &:nth-child(#{$i})::after {
                     $star-size: random(
-                            $limit: 4,
+                            $limit: 5,
                         ) +
                         px;
                     $star-position-top: random(
@@ -106,8 +116,8 @@
                     top: clamp(2%, #{$star-position-top * 1%}, 98%);
                     left: clamp(2%, #{$star-position-left * 1%}, 98%);
 
-                    width: #{"max(1px,#{$star-size})"};
-                    height: #{"max(1px,#{$star-size})"};
+                    width: #{"max(2px,#{$star-size})"};
+                    height: #{"max(2px,#{$star-size})"};
 
                     animation-duration: #{$blink-time + 20 * 100 + ms};
                 }
