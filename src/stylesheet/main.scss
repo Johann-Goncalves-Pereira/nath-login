@@ -5,113 +5,155 @@
 /* Color */
 /* Text */
 
-:root {
-    // Put your var Colors
+/*
+! This functions are make the alf property super easy to deal with
+	
+: The explanation for way i use this are in this site: 
+	https://codyhouse.co/blog/post/how-to-combine-sass-color-functions-and-css-variables
 
-    --clr-background: rgba(42, 44, 65, var(--alpha, 1));
+* Function that create the hsla variables; 
+*/
+@function alpha($color, $opacity) {
+	$color: str-replace($color, "var(");
+	$color: str-replace($color, ")");
+	$color-h: var(#{$color + "-h"});
+	$color-s: var(#{$color + "-s"});
+	$color-l: var(#{$color + "-l"});
+	@return hsla($color-h, $color-s, $color-l, $opacity);
+}
 
-    --clr-forward: rgba(142, 154, 175, var(--alpha, 1));
+//* This one replace the string to convert variables;
+@function str-replace($string, $search, $replace: "") {
+	$index: str-index($string, $search);
+	@if $index {
+		@return str-slice($string, 1, $index - 1) + $replace +
+			str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+	}
+	@return $string;
+}
 
-    --clr-hover: rgba(92, 99, 120, var(--alpha, 1));
+//* the mixin is just to make easier to write the variables;
+@mixin defineColorHSL($color, $hue, $saturation, $lightness) {
+	#{$color}: unquote("hsl(#{$hue}, #{$saturation}, #{$lightness})");
+	#{$color}-h: #{$hue};
+	#{$color}-s: #{$saturation};
+	#{$color}-l: #{$lightness};
+}
 
-    --clr-main: rgba(217, 4, 41, var(--alpha, 1));
+:root,
+[data-theme="default"] {
+	// Put your var Colors
 
-    --clr-border: rgba(239, 35, 60, var(--alpha, 1));
+	// --clr-background: hsl(235, 21%, 21%);
+	@include defineColorHSL(--clr-background, 235, 21%, 21%);
 
-    --clr-text: rgba(237, 242, 244, var(--alpha, 1));
+	// --clr-forward: hsl(218, 17%, 62%);
+	@include defineColorHSL(--clr-forward, 218, 17%, 62%);
 
-    --title-big: clamp(3rem, 3.5vw + 1rem, 7rem);
-    --title-medium: clamp(2rem, 1.875vw + 1rem, 6rem);
-    --title-normal: clamp(1.5rem, 1vw + 1rem, 5rem);
+	// --clr-hover: hsl(225, 13%, 42%);
+	@include defineColorHSL(--clr-hover, 225, 13%, 42%);
 
-    --text-big: clamp(2rem, 3.5vw + 1rem, 4rem);
-    --text-normal: clamp(1rem, 0.5vw + 0.5rem, 3rem);
+	// --clr-main: hsl(350, 96%, 43%);
+	@include defineColorHSL(--clr-main, 350, 96%, 43%);
 
-    --border-radius: 4px;
+	// --clr-border: hsl(353, 86%, 54%);
+	@include defineColorHSL(--clr-border, 353, 86%, 54%);
+
+	// --clr-text: hsl(197, 24%, 94%);
+	@include defineColorHSL(--clr-text, 197, 24%, 94%);
+
+	--title-big: clamp(3rem, 3.5vw + 1rem, 7rem);
+	--title-medium: clamp(2rem, 1.875vw + 1rem, 6rem);
+	--title-normal: clamp(1.5rem, 1vw + 1rem, 5rem);
+
+	--text-big: clamp(2rem, 3.5vw + 1rem, 4rem);
+	--text-normal: clamp(1rem, 0.5vw + 0.5rem, 3rem);
+
+	--border-radius: 4px;
 }
 
 * {
-    // Set default font and color.
-    font-family: "Roboto", sans-serif;
-    color: var(--clr-text);
+	// Set default font and color.
+	font-family: "Roboto", sans-serif;
+	color: var(--clr-text);
 
-    // https://developer.mozilla.org/en-US/docs/Web/CSS/::-webkit-scrollbar
-    // don't work at firefox
-    &::-webkit-scrollbar {
-        width: 4px;
-        height: 4px;
-        border-radius: 0.25rem;
-        background: transparent;
-    }
+	// https://developer.mozilla.org/en-US/docs/Web/CSS/::-webkit-scrollbar
+	// don't work at firefox
+	&::-webkit-scrollbar {
+		width: 4px;
+		height: 4px;
+		border-radius: 0.25rem;
+		background: transparent;
+	}
 
-    &::-webkit-scrollbar-track {
-        background: transparent;
-        border-radius: 0.25rem;
-        width: 0;
-    }
+	&::-webkit-scrollbar-track {
+		background: transparent;
+		border-radius: 0.25rem;
+		width: 0;
+	}
 
-    &::-webkit-scrollbar-thumb {
-        background: var(--clr-main);
-        border-radius: 0.25rem;
-    }
+	&::-webkit-scrollbar-thumb {
+		background: var(--clr-main);
+		border-radius: 0.25rem;
+	}
 }
 
 // Body have fit all space available.
 html {
-    box-sizing: border-box;
-    width: 100%;
-    height: 100%;
-    margin: 0;
+	box-sizing: border-box;
+	width: 100%;
+	height: 100%;
+	margin: 0;
 }
 
 body {
-    box-sizing: border-box;
-    overflow: auto;
-    overflow: overlay;
-    min-height: 100%;
-    margin: 0;
+	box-sizing: border-box;
+	overflow: auto;
+	overflow: overlay;
+	min-height: 100%;
+	margin: 0;
 
-    background-color: var(--clr-background);
+	background-color: var(--clr-background);
 }
 
 // Reset Settings.
 ol,
 ul,
 li {
-    list-style-type: none;
+	list-style-type: none;
 }
 
 a {
-    text-decoration: none;
-    cursor: pointer;
+	text-decoration: none;
+	cursor: pointer;
 }
 
 button {
-    cursor: pointer;
-    border: 0;
+	cursor: pointer;
+	border: 0;
 }
 
 strong {
-    font-weight: bold;
+	font-weight: bold;
 }
 
 ::placeholder {
-    color: var(--clr-background);
+	color: var(--clr-background);
 }
 :focus {
-    outline: 0;
+	outline: 0;
 }
 
 input {
-    // https://developer.mozilla.org/en-US/docs/Web/CSS/:autofill
-    // auto fill don't change.
-    &:-webkit-autofill,
-    &:-webkit-autofill:hover,
-    &:-webkit-autofill:focus,
-    &:-webkit-autofill:active {
-        transition: color 9999s ease-out;
-        transition-delay: 9999s;
-    }
+	// https://developer.mozilla.org/en-US/docs/Web/CSS/:autofill
+	// auto fill don't change.
+	&:-webkit-autofill,
+	&:-webkit-autofill:hover,
+	&:-webkit-autofill:focus,
+	&:-webkit-autofill:active {
+		transition: color 9999s ease-out;
+		transition-delay: 9999s;
+	}
 }
 
 // More ease to understand what this vars a used for.
@@ -122,29 +164,29 @@ $breakpoint-tablet: 730px;
 
 // Change html size for Rem unit change.
 @media (max-width: $breakpoint-medium-desktop) {
-    html {
-        font-size: 93.75%;
-    }
+	html {
+		font-size: 93.75%;
+	}
 }
 
 @media (max-width: $breakpoint-small-desktop) {
-    html {
-        font-size: 87.5%;
-    }
+	html {
+		font-size: 87.5%;
+	}
 }
 
 @media (max-width: $breakpoint-tablet) {
-    html {
-        font-size: 75%;
-    }
+	html {
+		font-size: 75%;
+	}
 
-    *::-webkit-scrollbar {
-        display: none;
-    }
+	*::-webkit-scrollbar {
+		display: none;
+	}
 }
 
 @media screen {
-    @page {
-        margin: 0;
-    }
+	@page {
+		margin: 0;
+	}
 }
