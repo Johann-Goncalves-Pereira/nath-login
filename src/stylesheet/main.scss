@@ -54,10 +54,6 @@
         background: var(--clr-main);
         border-radius: 0.25rem;
     }
-
-    &::selection {
-        background-color: var(--clr-main);
-    }
 }
 
 // Body have fit all space available.
