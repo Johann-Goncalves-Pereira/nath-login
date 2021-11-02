@@ -1,0 +1,127 @@
+.main {
+    display: grid;
+    place-items: center;
+
+    width: 100vw;
+    height: 100vh;
+
+    &__ctnr {
+        display: grid;
+        place-items: center;
+        gap: 0.5rem;
+    }
+
+    &__title {
+        margin-top: 0;
+        margin-bottom: 1rem;
+    }
+
+    &__link {
+        position: relative;
+        isolation: isolate;
+
+        border-radius: var(--border-radius);
+        padding-block: 0.75rem;
+
+        width: 8rem;
+
+        text-align: center;
+        background-color: var(--clr-background);
+        background-image: linear-gradient(45deg, var(--clr-main), var(--clr-forward));
+
+        cursor: pointer;
+
+        transition: transform 100ms ease-in;
+
+        &:hover {
+            transform: scale(1.05) scaleZ(1);
+        }
+    }
+
+    &__stars {
+        position: absolute;
+        inset: 0;
+
+        z-index: -1;
+
+        .star {
+            border-radius: 50%;
+            background-color: var(--clr-text);
+
+            &::before,
+            &::after {
+                content: "";
+                position: absolute;
+                border-radius: inherit;
+                background-color: inherit;
+
+                animation: blink ease-out infinite;
+            }
+
+            @for $i from 1 to 50 {
+                //* Need to be repeated 2 times to be really random
+                &:nth-child(#{$i})::before {
+                    $star-size: random(
+                            $limit: 4,
+                        ) +
+                        px;
+                    $star-position-top: random(
+                        $limit: 100,
+                    );
+
+                    $star-position-left: random(
+                        $limit: 100,
+                    );
+
+                    $blink-time: random(
+                        $limit: 1000,
+                    );
+
+                    top: clamp(2%, #{$star-position-top * 1%}, 98%);
+                    left: clamp(2%, #{$star-position-left * 1%}, 98%);
+
+                    width: #{"max(1px,#{$star-size})"};
+                    height: #{"max(1px,#{$star-size})"};
+
+                    animation-duration: #{$blink-time + 20 * 100 + ms};
+                }
+
+                &:nth-child(#{$i})::after {
+                    $star-size: random(
+                            $limit: 4,
+                        ) +
+                        px;
+                    $star-position-top: random(
+                        $limit: 100,
+                    );
+
+                    $star-position-left: random(
+                        $limit: 100,
+                    );
+
+                    $blink-time: random(
+                        $limit: 1000,
+                    );
+
+                    top: clamp(2%, #{$star-position-top * 1%}, 98%);
+                    left: clamp(2%, #{$star-position-left * 1%}, 98%);
+
+                    width: #{"max(1px,#{$star-size})"};
+                    height: #{"max(1px,#{$star-size})"};
+
+                    animation-duration: #{$blink-time + 20 * 100 + ms};
+                }
+            }
+        }
+    }
+}
+
+@keyframes blink {
+    from {
+        background-color: var(--clr-text);
+    }
+
+    to {
+        background-color: transparent;
+    }
+}
