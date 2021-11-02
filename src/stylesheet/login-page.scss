@@ -47,91 +47,97 @@
             background-color: transparent;
         }
     }
+}
 
-    &__stars {
-        position: absolute;
-        inset: 0;
+.stars {
+    position: absolute;
+    inset: 0;
 
-        z-index: -1;
+    z-index: -1;
 
-        .star {
-            border-radius: 50%;
-            background-color: var(--clr-text);
+    &__dot {
+        border-radius: 50%;
+        background-color: var(--clr-text);
 
-            &::before,
-            &::after {
-                content: "";
-                position: absolute;
-                border-radius: inherit;
-                background-color: inherit;
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            border-radius: inherit;
+            background-color: inherit;
 
-                animation: blink ease-out infinite;
+            animation: blink ease-out infinite;
+        }
+
+        @for $i from 1 to 50 {
+            //* Need to be repeated 2 times to be really random
+            &:nth-child(#{$i})::before {
+                $star-size: random(
+                        $limit: 5,
+                    ) +
+                    px;
+                $star-position-top: random(
+                    $limit: 100,
+                );
+                $star-position-left: random(
+                    $limit: 100,
+                );
+
+                $blink-time: random(
+                    $limit: 1000,
+                );
+                $blink-daley: random(
+                    $limit: 1000,
+                );
+
+                top: clamp(2%, #{$star-position-top * 1%}, 98%);
+                left: clamp(2%, #{$star-position-left * 1%}, 98%);
+
+                width: #{"max(2px,#{$star-size})"};
+                height: #{"max(2px,#{$star-size})"};
+
+                animation-duration: #{$blink-time + 20 * 100 + ms};
+                animation-delay: #{$blink-daley + 10 * 100 + ms};
             }
 
-            @for $i from 1 to 50 {
-                //* Need to be repeated 2 times to be really random
-                &:nth-child(#{$i})::before {
-                    $star-size: random(
-                            $limit: 5,
-                        ) +
-                        px;
-                    $star-position-top: random(
-                        $limit: 100,
-                    );
+            &:nth-child(#{$i})::after {
+                $star-size: random(
+                        $limit: 5,
+                    ) +
+                    px;
+                $star-position-top: random(
+                    $limit: 100,
+                );
+                $star-position-left: random(
+                    $limit: 100,
+                );
 
-                    $star-position-left: random(
-                        $limit: 100,
-                    );
+                $blink-time: random(
+                    $limit: 1000,
+                );
+                $blink-daley: random(
+                    $limit: 1000,
+                );
 
-                    $blink-time: random(
-                        $limit: 1000,
-                    );
+                top: clamp(2%, #{$star-position-top * 1%}, 98%);
+                left: clamp(2%, #{$star-position-left * 1%}, 98%);
 
-                    top: clamp(2%, #{$star-position-top * 1%}, 98%);
-                    left: clamp(2%, #{$star-position-left * 1%}, 98%);
+                width: #{"max(2px,#{$star-size})"};
+                height: #{"max(2px,#{$star-size})"};
 
-                    width: #{"max(2px,#{$star-size})"};
-                    height: #{"max(2px,#{$star-size})"};
-
-                    animation-duration: #{$blink-time + 20 * 100 + ms};
-                }
-
-                &:nth-child(#{$i})::after {
-                    $star-size: random(
-                            $limit: 5,
-                        ) +
-                        px;
-                    $star-position-top: random(
-                        $limit: 100,
-                    );
-
-                    $star-position-left: random(
-                        $limit: 100,
-                    );
-
-                    $blink-time: random(
-                        $limit: 1000,
-                    );
-
-                    top: clamp(2%, #{$star-position-top * 1%}, 98%);
-                    left: clamp(2%, #{$star-position-left * 1%}, 98%);
-
-                    width: #{"max(2px,#{$star-size})"};
-                    height: #{"max(2px,#{$star-size})"};
-
-                    animation-duration: #{$blink-time + 20 * 100 + ms};
-                }
+                animation-duration: #{$blink-time + 20 * 100 + ms};
+                animation-delay: #{$blink-daley + 10 * 100 + ms};
             }
         }
     }
 }
 
 @keyframes blink {
-    from {
+    0% {
         background-color: var(--clr-text);
     }
 
-    to {
+    100% {
         background-color: transparent;
     }
 }
