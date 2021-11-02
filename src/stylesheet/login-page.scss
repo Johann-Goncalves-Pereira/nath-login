@@ -1,40 +1,69 @@
 .main {
+    --gradient: linear-gradient(45deg, var(--clr-main), var(--clr-forward));
+    --alpha: 0.5;
+
     display: grid;
     place-items: center;
 
     width: 100vw;
     height: 100vh;
 
+    //* Container of title and links
     &__ctnr {
         display: grid;
         place-items: center;
-        gap: 0.5rem;
+        gap: 1rem;
+
+        padding: 4rem;
+
+        &:hover .main__title::before {
+            transform: scaleX(1);
+        }
     }
 
     &__title {
+        position: relative;
         margin-top: 0;
         margin-bottom: 1rem;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 100%;
+            inset-inline: 0;
+
+            height: 2px;
+
+            background-image: var(--gradient);
+            transform-origin: left;
+            transform: scaleX(0);
+            transition: transform 300ms ease-in;
+        }
     }
 
     &__link {
+        $link-width: 12rem;
+
         position: relative;
         isolation: isolate;
 
         border-radius: var(--border-radius);
         padding-block: 0.75rem;
+        outline: 1px solid var(--clr-background);
+        outline-offset: -2px;
 
-        width: 8rem;
+        width: $link-width;
 
         text-align: center;
         background-color: var(--clr-background);
-        background-image: linear-gradient(45deg, var(--clr-main), var(--clr-forward));
+        background-image: var(--gradient);
 
         cursor: pointer;
 
-        transition: transform 100ms ease-in;
+        transition: width 150ms ease-in;
 
         &:hover {
-            transform: scale(1.05) scaleZ(1);
+            width: #{$link-width + 0.75};
         }
 
         &::selection {
@@ -70,6 +99,8 @@
         }
 
         @for $i from 1 to 50 {
+            $time: 20;
+
             //* Need to be repeated 2 times to be really random
             &:nth-child(#{$i})::before {
                 $star-size: random(
@@ -96,8 +127,8 @@
                 width: #{"max(2px,#{$star-size})"};
                 height: #{"max(2px,#{$star-size})"};
 
-                animation-duration: #{$blink-time + 20 * 100 + ms};
-                animation-delay: #{$blink-daley + 10 * 100 + ms};
+                animation-duration: #{$blink-time + $time * 100 + ms};
+                animation-delay: #{$blink-daley + $time * 100 + ms};
             }
 
             &:nth-child(#{$i})::after {
@@ -125,8 +156,8 @@
                 width: #{"max(2px,#{$star-size})"};
                 height: #{"max(2px,#{$star-size})"};
 
-                animation-duration: #{$blink-time + 20 * 100 + ms};
-                animation-delay: #{$blink-daley + 10 * 100 + ms};
+                animation-duration: #{$blink-time + $time * 100 + ms};
+                animation-delay: #{$blink-daley + $time * 100 + ms};
             }
         }
     }
