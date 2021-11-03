@@ -14,10 +14,30 @@
 		place-items: center;
 		gap: 1rem;
 
-		padding: 6rem 4rem;
+		padding: 12rem 10rem;
 
 		&:hover .main__title::before {
 			transform: scaleX(1);
+		}
+
+		&::before {
+			$before-size: 30rem;
+
+			content: "";
+			position: absolute;
+			inset: 0;
+			backdrop-filter: blur(2px);
+
+			border: 10px solid;
+			border-image-slice: 1;
+			border-width: 5px;
+			border-image-source: var(--gradient);
+			margin: auto;
+
+			width: $before-size;
+			height: $before-size;
+
+			animation: rotation 16000ms ease-in-out infinite;
 		}
 	}
 
@@ -64,6 +84,10 @@
 
 		&:hover {
 			width: #{$link-width + 0.75};
+			animation: vibration 500ms cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+			transform: translate3d(0, 0, 0);
+			backface-visibility: hidden;
+			perspective: 1000px;
 		}
 
 		&::selection {
@@ -98,6 +122,7 @@
 			animation: blink ease-out infinite;
 		}
 
+		// From 1 to the amount of div.stars
 		@for $i from 1 to 50 {
 			$time: 20;
 
@@ -170,5 +195,39 @@
 
 	100% {
 		background-color: transparent;
+	}
+}
+
+@keyframes rotation {
+	0%,
+	100% {
+		transform: rotate(0);
+	}
+
+	50% {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes vibration {
+	10%,
+	90% {
+		transform: translate3d(-1px, 0, 0);
+	}
+
+	20%,
+	80% {
+		transform: translate3d(2px, 0, 0);
+	}
+
+	30%,
+	50%,
+	70% {
+		transform: translate3d(-3px, 0, 0);
+	}
+
+	40%,
+	60% {
+		transform: translate3d(3px, 0, 0);
 	}
 }
