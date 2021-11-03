@@ -137,11 +137,17 @@ strong {
 	font-weight: bold;
 }
 
+:focus {
+	outline: 0;
+}
+
 ::placeholder {
 	color: var(--clr-background);
 }
-:focus {
-	outline: 0;
+
+::before,
+::after {
+	content: "";
 }
 
 input {
