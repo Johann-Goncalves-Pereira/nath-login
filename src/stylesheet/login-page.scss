@@ -1,3 +1,30 @@
+@mixin sap($time) {
+	$star-size: random(
+			$limit: 5,
+		) + px;
+	$star-position-top: random(
+		$limit: 100,
+	);
+	$star-position-left: random(
+		$limit: 100,
+	);
+
+	$blink-time: random(
+		$limit: 1000,
+	);
+	$blink-daley: random(
+		$limit: 1000,
+	);
+
+	transform: translate(clamp(2vw, #{$star-position-left * 1vw}, 98vw), clamp(2vh, #{$star-position-top * 1vh}, 98vh));
+
+	width: #{"max(2px,#{$star-size})"};
+	height: #{"max(2px,#{$star-size})"};
+
+	animation-duration: #{$blink-time + $time * 100 + ms};
+	animation-delay: #{$blink-daley + $time * 100 + ms};
+}
+
 .main {
 	--gradient: linear-gradient(45deg, var(--clr-main), var(--clr-forward));
 	--alpha: 0.5;
@@ -91,12 +118,6 @@
 		}
 
 		&::selection {
-			-webkit-touch-callout: none;
-			-webkit-user-select: none;
-			-khtml-user-select: none;
-			-moz-user-select: none;
-			-ms-user-select: none;
-			user-select: none;
 			background-color: transparent;
 		}
 	}
@@ -116,6 +137,8 @@
 		&::after {
 			content: "";
 			position: absolute;
+			top: 0;
+			left: 0;
 			border-radius: inherit;
 			background-color: inherit;
 
@@ -127,62 +150,13 @@
 			$time: 20;
 
 			//* Need to be repeated 2 times to be really random
+
 			&:nth-child(#{$i})::before {
-				$star-size: random(
-						$limit: 5,
-					) +
-					px;
-				$star-position-top: random(
-					$limit: 100,
-				);
-				$star-position-left: random(
-					$limit: 100,
-				);
-
-				$blink-time: random(
-					$limit: 1000,
-				);
-				$blink-daley: random(
-					$limit: 1000,
-				);
-
-				top: clamp(2%, #{$star-position-top * 1%}, 98%);
-				left: clamp(2%, #{$star-position-left * 1%}, 98%);
-
-				width: #{"max(2px,#{$star-size})"};
-				height: #{"max(2px,#{$star-size})"};
-
-				animation-duration: #{$blink-time + $time * 100 + ms};
-				animation-delay: #{$blink-daley + $time * 100 + ms};
+				@include sap($time);
 			}
 
 			&:nth-child(#{$i})::after {
-				$star-size: random(
-						$limit: 5,
-					) +
-					px;
-				$star-position-top: random(
-					$limit: 100,
-				);
-				$star-position-left: random(
-					$limit: 100,
-				);
-
-				$blink-time: random(
-					$limit: 1000,
-				);
-				$blink-daley: random(
-					$limit: 1000,
-				);
-
-				top: clamp(2%, #{$star-position-top * 1%}, 98%);
-				left: clamp(2%, #{$star-position-left * 1%}, 98%);
-
-				width: #{"max(2px,#{$star-size})"};
-				height: #{"max(2px,#{$star-size})"};
-
-				animation-duration: #{$blink-time + $time * 100 + ms};
-				animation-delay: #{$blink-daley + $time * 100 + ms};
+				@include sap($time);
 			}
 		}
 	}
@@ -190,11 +164,11 @@
 
 @keyframes blink {
 	0% {
-		background-color: var(--clr-text);
+		opacity: 1;
 	}
 
 	100% {
-		background-color: transparent;
+		opacity: 0;
 	}
 }
 
